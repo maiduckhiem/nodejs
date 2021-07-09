@@ -46,12 +46,26 @@ export const read = (req, res) => {
 export const update = (req, res) => {
   const category = req.category;
   category.name = req.body.name;
-  category.save((err, data) => {
+  Category.save((err, data) => {
     if (err || !category) {
       res.status(400).json({
         error: "danh mục này không tồn tại",
       });
     }
-    res.json({data});
+    res.json({ data });
+  });
+};
+
+//delete product
+
+export const remove = (req, res) => {
+  let category = req.category;
+  category.remove((err, deleteCategory) => {
+    if (err || !category) {
+      res.status(400).json({
+        error: "danh sách này không tồn tại",
+      });
+    }
+    res.json({ deleteCategory, message: "xóa danh mục thành công" });
   });
 };

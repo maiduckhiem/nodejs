@@ -1,12 +1,15 @@
-import  mongoose  from "mongoose";
+import mongoose from "mongoose";
 
-const categoryshema = mongoose.Schema({
-    name:{
-        type: String,
-        trim: true,
-        required: true,
-        maxlength:32
-    }
-},{timestamps:true});
+const categoryshema = mongoose.Schema(
+  {
+    name: {
+      type: String,
+      trim: true,
+      required: true,
+      maxlength: 32,
+    },
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('category',categoryshema);
+module.exports = mongoose.model("category", categoryshema);
