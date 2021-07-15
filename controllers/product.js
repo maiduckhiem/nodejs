@@ -8,7 +8,7 @@ export const list = (req, res) => {
     if (err) {
       error: "không tìm thấy sản phẩm";
     }
-    res.json({ data });
+    res.json(data);
   });
 };
 
@@ -33,7 +33,7 @@ export const add = (req, res) => {
           error: "bạn nên up lại ảnh dưới 1mb",
         });
       }
-      product.photo.data = fs.readFileSync(files.photo.path);
+      product.photo.data = fs.readFileSync(files.photo.type);
       product.photo.contentType = file.photo.path;
     }
     product.save((err, data) => {
@@ -83,13 +83,14 @@ export const remove = (req, res) => {
 export const update = (req, res) => {
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
-  form.parse(req, (err, fields, files) => {
+  form.parse(req, (err, fields, files) => { //files là thằng upload để kiểm tra dung dluonwjg 
+    console.log(files);
     if (err) {
       return res.status(400).json({
         error: "sửa san pham thanh cong",
       });
     }
-    const { name, description, price } = fields;
+    const { name, description, price } = fields; //fields lấy từ input đâtr lên erver
     if (!name || !description || !price) {
       return res.status(400).json({ error: "bạn cần nhập đây đủ thông tin" });
     }
@@ -103,7 +104,7 @@ export const update = (req, res) => {
           error: "bạn nên up lại ảnh dưới 1mb",
         });
       }
-      product.photo.data = fs.readFileSync(files.photo.path);
+      product.photo.data = fs.readFileSync(files.photo.type);
       product.photo.contentType = file.photo.path;
     }
     product.save((err, data) => {
@@ -112,7 +113,7 @@ export const update = (req, res) => {
           error: "không sửa được sản phẩm",
         });
       }
-      res.json({ data });
+      res.json( data );
     });
   });
 };

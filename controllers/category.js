@@ -21,7 +21,7 @@ export const list = (req, res) => {
         error: "danh mục không tồn tại",
       });
     }
-    res.json({ categories });
+    res.json(categories);
   });
 };
 
@@ -46,7 +46,7 @@ export const read = (req, res) => {
 export const update = (req, res) => {
   const category = req.category;
   category.name = req.body.name;
-  Category.save((err, data) => {
+  category.save((err, data) => {
     if (err || !category) {
       res.status(400).json({
         error: "danh mục này không tồn tại",
