@@ -1,18 +1,17 @@
 import Express from "express";
 
-const Routes = Express.Router();
+const router = Express.Router();
 import { userById, update, read } from "../controllers/user";
-import { requireSignin, isAuth, read } from "../controllers/auth";
+import { requireSignin, isAuth, isAdmin } from "../controllers/auth";
 
-Routes.get("/user/:userId", requireSignin, isAuth, read, (req, res) => {
+router.get("/secret/:userId", requireSignin, isAuth, isAdmin, (req, res) => {
   res.json({
     user: req.profile,
   });
 });
+router.get("/user/:userId", requireSignin, isAuth, read);
+router.put("/user/:userId", requireSignin, isAuth, update);
 
-Routes.get("/user/:userId", requireSignin, isAuth, read);
-Routes.put("/user/:userId", requireSignin, isAuth, update);
+router.param("userId", userById);
 
-Routes.param("userId", userById);
-
-module.exports = Router;
+module.exports = router;

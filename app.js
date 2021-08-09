@@ -1,14 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import categoryRoutes from "./routes/category";
 import cors from 'cors'
+// import morgan from "morgan"
 // import productRoutes from './routes/product';
 
 const app = express();
 dotenv.config();
-app.use(express.json());
-app.use(cors({ credentials: "same-origin" }));
 
 //connection
 mongoose
@@ -23,12 +21,18 @@ mongoose
 mongoose.connection.on("error", (err) => {
   console.log(`data connect failed, ${err.message}`);
 });
-// const authRoutes = require("./routes/auth");
+const authRoutes = require("./routes/auth");
 const CategoryRoutes = require('./routes/category');
 const productRoutes = require("./routes/product");
+// const userRoutes = require("./routes/user")
+
+// app.use(morgan("dev"));
+app.use(cors({credentials:"same-origin"}));
+app.use(express.json());
 
 //routes
-// app.use("/api", authRoutes);
+// app.use("/api", userRoutes)
+app.use("/api", authRoutes);
 app.use("/api", productRoutes);
 app.use("/api", CategoryRoutes);
 

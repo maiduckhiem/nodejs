@@ -1,12 +1,18 @@
-import Express from "express";
+import express from "express";
 
-const Routes = Express.Router();
+const routes = express.Router();
 
-import { signup, signin, signout, accountAcivation } from "../controllers/auth";
+import {
+  signup,
+  signin,
+  signout,
+  accountAcivation,
+  listuser,
+} from "../controllers/auth";
 
-Routes.post("/signup", signup);
-Routes.post("/account-activation", accountAcivation);
-Routes.get("signout", signout);
-Routes.post("signin", signin);
-
-module.exports = Routes;
+routes.post("/signup",signup)
+// Routes.post("/account-activation", accountAcivation);
+routes.get("/signout", signout);
+routes.post("/signin", signin);
+routes.get("/listuser",listuser);
+module.exports = routes;

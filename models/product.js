@@ -18,9 +18,9 @@ const productSchema = new mongoose.Schema(
       required: true,
       maxlength: 32,
     },
-    category: {
+    categoryId: {
       type: ObjectId,
-      ref: "categoryId",
+      ref: "category",
       required: false,
     },
     quantity: {
@@ -34,10 +34,7 @@ const productSchema = new mongoose.Schema(
       data: Buffer,
       contentType: String,
     },
-    shipping: {
-      required: false,
-      type: Boolean,
-    },
+   
   },
   { timestamps: true }
 );

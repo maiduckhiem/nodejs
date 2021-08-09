@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import crypto from 'crypto'
-import uuidv4 from "uuidv4";
+import crypto from "crypto";
+import { v4 as uuidv4 } from "uuid";
 
 const authSchema = mongoose.Schema(
   {
@@ -19,6 +19,10 @@ const authSchema = mongoose.Schema(
     about: {
       type: String,
       trim: true,
+    },
+    hashed_password: {
+      type: String,
+      required: true,
     },
     salt: {
       type: String,
@@ -39,15 +43,14 @@ authSchema
   .virtual("password") //tạo ra một field ảo
   .set(function (password) {
     // password naỳ lấy từ thằng field đẩy lên
-    console.log("password model", password);
     this.salt = uuidv4(); // dùng để mã hóa password
-    console.log("this.salt", this.salt);
     this.hashed_password = this.encrytPassword(password);
     console.log("this.hashed_password", this.hashed_password);
   });
 
 authSchema.methods = {
-  userSchema: function (plainText) {
+  authenticate: function (plainText) {
+    console.log("hashed_password", this.hashed_password);
     return this.encrytPassword(plainText) === this.hashed_password;
   },
   encrytPassword: function (password) {
@@ -56,10 +59,10 @@ authSchema.methods = {
       return crypto
         .createHmac("sha1", this.salt)
         .update(password)
-        .disgest("hex");
+        .digest("hex"); // what the dis?
     } catch (error) {
       return "";
     }
   },
-}
-module.exports = authSchema;
+};
+module.exports = mongoose.model("User", authSchema);

@@ -7,7 +7,7 @@ const categoryshema = mongoose.Schema(
       trim: true,
       required: true,
       maxlength: 32,
-    },
+    }
   },
   { timestamps: true }
 );
